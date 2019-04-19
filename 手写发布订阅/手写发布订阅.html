@@ -21,11 +21,12 @@
       /**
        * 添加订阅者
        * 若订阅者需要插入的订阅器不存在，则新创建一个
+       * key 是订阅器名，value是对应的一个个订阅者
        * @param { string } type - 需要添加订阅者的订阅器名
        * @param { function } func - 订阅者
        */
-      Publisher.prototype.addSub = function (type, func) {
-        if (!this._subs[type]) this._subs[type] = [];
+      Publisher.prototype.addSub = function (type, func) {  
+        if (!this._subs[type]) this._subs[type] = []; 
         this._subs[type].push(func);
       };
 
@@ -36,7 +37,7 @@
        */
       Publisher.prototype.notify = function (type) {
         if (!this._subs[type]) return;
-        var args = Array.prototype.slice.call(arguments, 1);
+        var args = Array.prototype.slice.call(arguments, 1);  // 除了第一个type的其它参数
         this._subs[type].forEach(function (item) {
           item.apply(this, args);
         }, this);
